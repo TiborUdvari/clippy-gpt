@@ -1,0 +1,20 @@
+{
+  "name": "clippy-gpt",
+  "version": "1.0.0",
+  "main": "background.js",
+  "keywords": [
+    "clippy",
+    "gpt",
+    "browser extension"
+  ],
+  "author": "Tibor Udvari",
+  "scripts": {
+    "dev": "npx esbuild background/index.mjs --bundle --outfile=background.js --watch"
+  },
+  "dependencies": {
+    "esbuild": "^0.15.17",
+    "eventsource-parser": "^0.0.5",
+    "expiry-map": "^2.0.0",
+    "uuid": "^9.0.0"
+  }
+}
