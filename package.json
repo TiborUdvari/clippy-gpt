@@ -9,7 +9,9 @@
   ],
   "author": "Tibor Udvari",
   "scripts": {
-    "dev": "npx esbuild background/index.mjs --bundle --outfile=background.js --watch"
+    "dev": "npx esbuild background/index.mjs --bundle --outfile=background.js --watch",
+    "build": "npx esbuild background/index.mjs --bundle --outfile=background.js && mkdir -p build && cp manifest.json build && cp *.js *.css logo.png build || true && rm background.js"
+
   },
   "dependencies": {
     "esbuild": "^0.15.17",
