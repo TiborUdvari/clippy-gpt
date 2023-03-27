@@ -1,0 +1,3 @@
+[submodule "lib/clippyjs"]
+	path = lib/clippyjs
+	url = git@github.com:TiborUdvari/clippy.js.git
