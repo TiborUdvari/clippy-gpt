@@ -1,4 +1,5 @@
-import imgPath from "./map.png";
+// import imgPath from "./map.png";
+import {base64} from "./map.mjs";
 
 const clippyData = {
   overlayCount: 1,
@@ -3765,7 +3766,7 @@ console.log("Content script entry");
 const ccontainer = `
     <div class="cContainer" id="cContainer">
       <div class="cResizable" id="cResizable">
-        <div class="response">Let's get started, ask me something</div>
+        <div class="response" id="clippygptResponse">Let's get started, ask me something</div>
         <div class="chatArea">
           <textarea></textarea>
           <button>Clippy GPT 📎</button>
@@ -3798,8 +3799,7 @@ if (existingClippy) {
 
 // add background image to the div
 // var imgPath = chrome.extension.getURL("images/clippy.png");
-
-clippyEl.style.backgroundImage = "url(" + imgPath + ")";
+clippyEl.style.backgroundImage = "url(" + base64 + ")";
 clippyEl.style.backgroundPositionX = "-248px";
 clippyEl.style.backgroundPositionY = "-3069px";
 
@@ -3889,6 +3889,35 @@ function toggleResizable() {
   }
 }
 
+
+async function run(question) {
+  const container = document.getElementById("clippygptResponse");
+  container.innerHTML = '<p class="loading">Waiting for ChatGPT response...</p>';
+
+  
+  const port = chrome.runtime.connect();
+  port.onMessage.addListener(function (msg) {
+    console.log("------ msg start");
+    console.log(msg);
+    console.log("----- msg end");
+
+
+    if (msg.answer) {
+      container.innerHTML = `<p><span class="prefix">ChatGPT:</span><pre>${msg.answer}</pre></p>`;
+      console.log("THE ANSWER IS " + msg.answer);
+      
+    } else if (msg.error === "UNAUTHORIZED") {
+      container.innerHTML =
+        '<p>Please login at <a href="https://chat.openai.com" target="_blank">chat.openai.com</a> first</p>';
+    } else {
+      container.innerHTML = "<p>Failed to load response from ChatGPT</p>";
+    }
+  });
+  port.postMessage({ question });
+
+  console.log("TIBOR posted the question");
+  // console.log(); 
+}
 
 
 
