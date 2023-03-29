@@ -1,1 +1,0 @@
-console.log("Clippy is here!!!");

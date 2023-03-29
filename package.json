@@ -2,6 +2,7 @@
   "name": "clippy-gpt",
   "version": "1.0.0",
   "main": "background.js",
+  "source": "src/index.js",
   "keywords": [
     "clippy",
     "gpt",
@@ -9,14 +10,20 @@
   ],
   "author": "Tibor Udvari",
   "scripts": {
-    "dev": "npx esbuild background/index.mjs --bundle --outfile=background.js --watch",
-    "build": "npx esbuild background/index.mjs --bundle --outfile=background.js && mkdir -p build && cp manifest.json build && cp *.js *.css logo.png build || true && rm background.js"
-
+    "copy-assets": "ncp lib/clippyjs/dist build/assets",
+    "build:background": "npx esbuild background/index.mjs --bundle --outfile=background.js --asset-names=assets/[name].[hash].[ext] --public-path=./",
+    "build:content": "npx esbuild content-script-entry.js --bundle --outfile=content-script.js --asset-names=assets/[name].[hash].[ext] --public-path=./",
+    "build": "npm run build:background && npm run build:content && mkdir -p build && cp manifest.json build && cp *.js *.css logo.png build || true && rm background.js && rm content-script.js"
   },
   "dependencies": {
+    "clippyjs": "file:./lib/clippyjs",
     "esbuild": "^0.15.17",
     "eventsource-parser": "^0.0.5",
     "expiry-map": "^2.0.0",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "ncp": "^2.0.0",
+    "parcel": "^2.8.3"
   }
 }
