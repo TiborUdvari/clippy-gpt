@@ -6,22 +6,63 @@
 
 import { base64, clippyData } from "./map.mjs";
 
-const ccontainer = `
-    <div class="cContainer" id="cContainer">
-      <div class="cResizable" id="cResizable">
-        <div class="response" id="clippygptResponse">Let's get started, ask me something</div>
-        <div class="chatArea">
-          <textarea></textarea>
-          <button>Clippy GPT 📎</button>
-        </div>
-      </div>
-      <div class="cClippy">
-        <div class="clippy" id="clippy"></div>
-      </div>
-    </div>
-  `;
+// const ccontainer = `
+//     <div class="cContainer" id="cContainer">
+//       <div class="cResizable" id="cResizable">
+//         <div class="response" id="clippygptResponse">Let's get started, ask me something</div>
+//         <div class="chatArea">
+//           <textarea></textarea>
+//           <button>Clippy GPT 📎</button>
+//         </div>
+//       </div>
+//       <div class="cClippy">
+//         <div class="clippy" id="clippy"></div>
+//       </div>
+//     </div>
+//   `;
 
-document.body.innerHTML += ccontainer;
+// document.body.innerHTML += ccontainer;
+
+
+const mainContainer = document.createElement("div");
+mainContainer.className = "cContainer";
+mainContainer.id = "cContainer";
+
+const resizable = document.createElement("div");
+resizable.className = "cResizable";
+resizable.id = "cResizable";
+mainContainer.appendChild(resizable);
+
+const response = document.createElement("div");
+response.className = "response";
+response.id = "clippygptResponse";
+response.textContent = "Let's get started, ask me something";
+resizable.appendChild(response);
+
+const chatArea = document.createElement("div");
+chatArea.className = "chatArea";
+resizable.appendChild(chatArea);
+
+const chatTextarea = document.createElement("textarea");
+chatArea.appendChild(chatTextarea);
+
+const chatButton = document.createElement("button");
+chatButton.textContent = "Clippy GPT 📎";
+chatArea.appendChild(chatButton);
+
+const clippyArea = document.createElement("div");
+clippyArea.className = "cClippy";
+mainContainer.appendChild(clippyArea);
+
+const clippyElement = document.createElement("div");
+clippyElement.className = "clippy";
+clippyElement.id = "clippy";
+clippyArea.appendChild(clippyElement);
+
+document.body.appendChild(mainContainer);
+
+
+
 
 var existingClippy = document.querySelector(".clippy");
 var clippyEl = undefined;
@@ -130,8 +171,8 @@ function toggleResizable() {
   }
 }
 
-const chatButton = document.querySelector(".chatArea button");
-const chatTextarea = document.querySelector(".chatArea textarea");
+// const chatButton = document.querySelector(".chatArea button");
+// const chatTextarea = document.querySelector(".chatArea textarea");
 
 chatTextarea.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
