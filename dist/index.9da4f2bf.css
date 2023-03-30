@@ -15,10 +15,6 @@
   display: flex;
 }
 
-.response {
-  overflow: scroll;
-}
-
 .chatArea > textarea {
   width: 98%;
   resize: none;

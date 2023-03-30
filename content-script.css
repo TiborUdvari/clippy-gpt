@@ -22,7 +22,7 @@
 }
 
 .response {
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .chatArea > textarea {
